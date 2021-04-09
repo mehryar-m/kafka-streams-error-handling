@@ -1,1 +1,1 @@
-# kafka-streams-error-handling
+# Kafka Streams Error Handling
