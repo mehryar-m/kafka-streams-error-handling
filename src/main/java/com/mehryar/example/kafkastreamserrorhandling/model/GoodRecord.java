@@ -5,9 +5,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class ExampleRecord {
-
-    private ExampleRecordState state;
+public class GoodRecord {
     private String data;
 
 }

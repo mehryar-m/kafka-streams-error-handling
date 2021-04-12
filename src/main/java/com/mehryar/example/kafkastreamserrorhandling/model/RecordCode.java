@@ -1,6 +1,7 @@
 package com.mehryar.example.kafkastreamserrorhandling.model;
 
-public enum ExampleRecordState {
+public enum RecordCode {
     SUCCESS,
-    FAIL
+    BAD_MAPPING,
+    BAD_JOIN
 }

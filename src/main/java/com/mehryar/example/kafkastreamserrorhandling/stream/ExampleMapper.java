@@ -1,21 +1,24 @@
 package com.mehryar.example.kafkastreamserrorhandling.stream;
 
-import com.mehryar.example.kafkastreamserrorhandling.model.ExampleRecord;
-import com.mehryar.example.kafkastreamserrorhandling.model.ExampleRecordState;
+import com.mehryar.example.kafkastreamserrorhandling.model.RecordCode;
+import com.mehryar.example.kafkastreamserrorhandling.model.RecordWrapper;
 import org.apache.kafka.streams.kstream.ValueMapper;
 
-public class ExampleMapper implements ValueMapper<String, ExampleRecord> {
+public class ExampleMapper implements ValueMapper<String, RecordWrapper> {
 
     @Override
-    public ExampleRecord apply(String value) {
+    public RecordWrapper apply(String value) {
         return !value.equals("good") ? wrapError(value) : wrapSuccess(value);
     }
 
-    private ExampleRecord wrapError(String value) {
-        return ExampleRecord.builder().data(value).state(ExampleRecordState.FAIL).build();
+    private RecordWrapper wrapError(String value) {
+        return RecordWrapper.builder().state(RecordCode.BAD_MAPPING).data(value).build();
     }
 
-    private ExampleRecord wrapSuccess(String value) {
-        return ExampleRecord.builder().data(value).state(ExampleRecordState.SUCCESS).build();
+    private RecordWrapper wrapSuccess(String value) {
+        return RecordWrapper.builder()
+                .state(RecordCode.SUCCESS)
+                .data(value)
+                .build();
     }
 }
