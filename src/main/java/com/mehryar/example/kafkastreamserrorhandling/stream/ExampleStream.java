@@ -2,7 +2,7 @@ package com.mehryar.example.kafkastreamserrorhandling.stream;
 
 
 
-import com.mehryar.example.kafkastreamserrorhandling.model.RecordCode;
+import com.mehryar.example.kafkastreamserrorhandling.model.RecordStatus;
 import com.mehryar.example.kafkastreamserrorhandling.model.RecordWrapper;
 import com.mehryar.example.kafkastreamserrorhandling.transformer.ErrorTransfomerSupplier;
 import org.apache.kafka.common.serialization.Serdes;
@@ -31,8 +31,8 @@ public class ExampleStream {
                 Consumed.with(Serdes.String(), Serdes.String()));
 
         KStream<String, RecordWrapper>[] branches = inputStream.mapValues(new ExampleMapper()).branch(
-                (key, value) -> value.getState().equals(RecordCode.SUCCESS),
-                (key, value) -> !value.getState().equals(RecordCode.SUCCESS));
+                (key, value) -> value.getStatus().equals(RecordStatus.SUCCESS),
+                (key, value) -> !value.getStatus().equals(RecordStatus.SUCCESS));
 
         branches[SUCCESS].to("Success");
         branches[FAIL].transformValues(new ErrorTransfomerSupplier()).to("Error");

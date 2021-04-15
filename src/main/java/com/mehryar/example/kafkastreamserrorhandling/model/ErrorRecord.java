@@ -9,7 +9,7 @@ import java.time.Instant;
 @Data
 public class ErrorRecord {
     private String applicationId;
-    private RecordCode code;
+    private RecordStatus code;
     private String srcTopic;
     private long srcOffset;
     private int srcPartition;

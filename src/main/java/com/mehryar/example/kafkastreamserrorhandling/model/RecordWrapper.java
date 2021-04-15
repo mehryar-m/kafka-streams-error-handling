@@ -7,6 +7,6 @@ import lombok.Data;
 @Data
 @Builder
 public class RecordWrapper {
-    private RecordCode state;
+    private RecordStatus status;
     private Object data;
 }
