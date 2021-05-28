@@ -44,6 +44,7 @@ dependencies {
     // testing
     testCompile group: 'org.apache.kafka', name: 'kafka-streams', version: '1.0.0', classifier: 'test'
     testCompile group: 'org.apache.kafka', name: 'kafka-clients', version: '1.0.0', classifier: 'test'
+    testCompile group: 'org.apache.kafka', name:'kafka-streams-test-utils',  version: '2.6.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

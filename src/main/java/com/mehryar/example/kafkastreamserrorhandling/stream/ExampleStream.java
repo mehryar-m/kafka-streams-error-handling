@@ -2,6 +2,7 @@ package com.mehryar.example.kafkastreamserrorhandling.stream;
 
 
 
+import com.mehryar.example.kafkastreamserrorhandling.model.ErrorRecord;
 import com.mehryar.example.kafkastreamserrorhandling.model.RecordStatus;
 import com.mehryar.example.kafkastreamserrorhandling.model.RecordWrapper;
 import com.mehryar.example.kafkastreamserrorhandling.transformer.ErrorTransfomerSupplier;
@@ -18,11 +19,15 @@ import org.springframework.kafka.annotation.EnableKafkaStreams;
 @EnableKafkaStreams
 public class ExampleStream {
 
+    private final StreamConfiguration streamConfiguration;
+
     @Autowired
-    StreamConfiguration streamConfiguration;
+    public ExampleStream(StreamConfiguration streamConfiguration){
+        this.streamConfiguration = streamConfiguration;
+    }
 
     @Bean
-    public StreamsBuilder exampleStream(StreamsBuilder streamsBuilder){
+    public StreamsBuilder stream(StreamsBuilder streamsBuilder){
 
         int SUCCESS = 0;
         int FAIL = 1;
@@ -34,8 +39,10 @@ public class ExampleStream {
                 (key, value) -> value.getStatus().equals(RecordStatus.SUCCESS),
                 (key, value) -> !value.getStatus().equals(RecordStatus.SUCCESS));
 
-        branches[SUCCESS].to("Success");
-        branches[FAIL].transformValues(new ErrorTransfomerSupplier()).to("Error");
+        branches[SUCCESS].mapValues(RecordWrapper::toString)
+                .to("Success");
+        branches[FAIL].transformValues(new ErrorTransfomerSupplier())
+                .mapValues(ErrorRecord::toString).to("Error");
 
         return streamsBuilder;
     }

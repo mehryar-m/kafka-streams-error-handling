@@ -20,7 +20,7 @@ public class ErrorTransformer implements ValueTransformer<RecordWrapper, ErrorRe
 
         return ErrorRecord.builder()
                 .applicationId(context.applicationId())
-                .code(value.getState())
+                .code(value.getStatus())
                 .srcTopic(context.topic())
                 .srcPartition(context.partition())
                 .srcOffset(context.offset())
