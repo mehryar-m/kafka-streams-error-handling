@@ -1,4 +1,4 @@
-package com.mehryar.example.kafkastreamserrorhandling.transformer;
+package com.mehryar.example.kafkastreamserrorhandling.errorhandler;
 
 import com.mehryar.example.kafkastreamserrorhandling.model.ErrorRecord;
 import com.mehryar.example.kafkastreamserrorhandling.model.RecordWrapper;

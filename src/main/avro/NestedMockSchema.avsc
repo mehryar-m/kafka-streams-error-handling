@@ -1,0 +1,18 @@
+{
+  "namespace": "com.example.mehryar",
+  "type": "record",
+  "name": "NestedMockSchema",
+  "fields": [
+    {
+      "name": "someParentString",
+      "type": {
+        "avro.java.string": "String",
+        "type": "string"
+      }
+    },
+    {
+      "name": "mockSchema",
+      "type": "com.example.mehryar.MockSchema"
+    }
+  ]
+}

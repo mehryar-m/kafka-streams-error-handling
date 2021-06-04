@@ -1,6 +1,7 @@
 package com.mehryar.example.kafkastreamserrorhandling.stream;
 
 
+import com.mehryar.example.kafkastreamserrorhandling.errorhandler.ErrorHandler;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.*;
 import org.junit.jupiter.api.BeforeAll;
@@ -28,7 +29,8 @@ public class StreamTests {
     @Test
     void testTopologyForError() {
         StreamsBuilder streamsBuilder = new StreamsBuilder();
-        new ExampleStream(streamConfiguration).stream(streamsBuilder);
+        ErrorHandler errorHandler = new ErrorHandler();
+        new StringStreamExample(streamConfiguration, errorHandler).stringStream(streamsBuilder);
         Topology topology = streamsBuilder.build();
         topologyTestDriver = new TopologyTestDriver(topology, props);
 
@@ -41,9 +43,6 @@ public class StreamTests {
 
         inputTopic.pipeInput("not sgood");
         assert !errorTopic.isEmpty();
-
-
-
 
     }
 

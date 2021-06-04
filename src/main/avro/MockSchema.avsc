@@ -1,0 +1,14 @@
+{
+  "namespace": "com.example.mehryar",
+  "type": "record",
+  "name": "MockSchema",
+  "fields": [
+    {
+      "name": "someChildString",
+      "type": {
+        "avro.java.string": "String",
+        "type": "string"
+      }
+    }
+  ]
+}

@@ -8,9 +8,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @Data
 public class StreamConfiguration {
-    @Value("${stream.inputTopic}")
+    @Value("${stream.string.inputTopic}")
     private String inputTopic;
 
-    @Value("${stream.outputTopic}")
+    @Value("${stream.string.outputTopic}")
     private String outputTopic;
+
+    @Value("${stream.avro.input}")
+    private String avroInput;
+
+    @Value("${stream.string.output}")
+    private String avroOutput;
+
 }
