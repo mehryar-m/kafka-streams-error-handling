@@ -22,7 +22,7 @@
       "name": "metaData",
       "type": [
         "null",
-        "$package.internal.dsp.error.ErrorMetadata"
+        "com.example.mehryar.ErrorMetadata"
       ],
       "doc": "Optional field. Error metadata object for cases here stack trace information is relevant for the error.",
       "default": null
@@ -38,7 +38,7 @@
     },
     {
       "name": "srcTopic",
-      "type": "$package.internal.dsp.error.TopicMetadata",
+      "type": "com.example.mehryar.TopicMetadata",
       "doc": "Source topic metadata of the source event that caused this error."
     },
     {

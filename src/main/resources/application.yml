@@ -2,7 +2,12 @@ spring:
   application:
     name: kafka-streams-error-handler
   kafka:
-    bootstrap-servers: ${BOOTSTRAP_SERVERS:localhost:9092}
+    streams:
+      properties:
+        schema.registry.url: ${SCHEMA_REGISTRY_URL:mock://testUrl}
+        default.key.serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+        default.value.serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+      bootstrap-servers: ${BOOTSTRAP_SERVERS:localhost:9092}
 
 stream:
   string:

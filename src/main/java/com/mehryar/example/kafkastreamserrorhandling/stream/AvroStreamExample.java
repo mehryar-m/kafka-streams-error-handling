@@ -2,6 +2,7 @@ package com.mehryar.example.kafkastreamserrorhandling.stream;
 
 import com.example.mehryar.NestedMockSchema;
 import com.mehryar.example.kafkastreamserrorhandling.errorhandler.ErrorHandler;
+import com.mehryar.example.kafkastreamserrorhandling.mapper.MockErrorMapperExample;
 import com.mehryar.example.kafkastreamserrorhandling.model.RecordStatus;
 import com.mehryar.example.kafkastreamserrorhandling.model.RecordWrapper;
 import io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig;
@@ -15,6 +16,7 @@ import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.KStream;
+import org.apache.kafka.streams.kstream.KTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,12 +27,8 @@ import java.util.Map;
 @SuppressWarnings("unchecked")
 public class AvroStreamExample {
 
-
-    final Map<String, String> serdeConfig = Collections.singletonMap(AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG,
-            "http://localhost:8081");
     private final StreamConfiguration streamConfiguration;
     private final ErrorHandler errorHandler;
-
 
     @Autowired
     public AvroStreamExample(StreamConfiguration streamConfiguration, ErrorHandler errorHandler){
@@ -40,12 +38,10 @@ public class AvroStreamExample {
 
     public void buildExampleAvroStream(StreamsBuilder streamsBuilder){
 
-        KStream<String, RecordWrapper<NestedMockSchema>> nestedMockSchemaKStream = streamsBuilder
-                .stream(streamConfiguration.getAvroInput(), Consumed.with(Serdes.String(), getNestedMockSchemaSerde()))
-                .mapValues(errorHandler.wrapper());
-        KStream<String, RecordWrapper<NestedMockSchema>>[] branches = errorHandler.branchError(nestedMockSchemaKStream);
-        errorHandler.handleError(branches[errorHandler.getFailIndex()]);
-        branches[errorHandler.getSuccessIndex()].mapValues(RecordWrapper::getGenericRecord).to("AvroSuccess");
+        KStream<String, RecordWrapper<NestedMockSchema>> nestedMockSchemaKStream =
+                errorHandler.startTopology(streamsBuilder, streamConfiguration.getAvroInput(), getNestedMockSchemaSerde());
+        nestedMockSchemaKStream.mapValues(new MockErrorMapperExample()); // mock mapper that errors out if a bad thing happened.
+        errorHandler.completeTopology(streamConfiguration.getAvroOutput(), nestedMockSchemaKStream);
     }
 
 
@@ -58,7 +54,7 @@ public class AvroStreamExample {
     private Serde<NestedMockSchema> getNestedMockSchemaSerde(){
         Serde<NestedMockSchema> nestedMockSchemaSerde = Serdes.serdeFrom(
                 new SpecificAvroSerializer<>(), new SpecificAvroDeserializer<>());
-        nestedMockSchemaSerde.configure(serdeConfig, false);
+        nestedMockSchemaSerde.configure(getSerdeConfig(), false);
 
         return nestedMockSchemaSerde;
     }
@@ -66,8 +62,14 @@ public class AvroStreamExample {
     private Serde<GenericRecord> getRecordWrapperSchemaSerde(){
         Serde<GenericRecord> recordWrapperSerde = Serdes.serdeFrom(
                 new GenericAvroSerializer(), new GenericAvroDeserializer());
-        recordWrapperSerde.configure(serdeConfig, false);
+        recordWrapperSerde.configure(getSerdeConfig(), false);
 
         return recordWrapperSerde;
     }
+
+    private Map<String, String> getSerdeConfig(){
+        return Collections.singletonMap(AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG,
+                this.streamConfiguration.getSchemaRegistryURL());
+    }
+
 }

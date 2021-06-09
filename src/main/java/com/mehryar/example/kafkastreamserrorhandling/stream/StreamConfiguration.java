@@ -20,4 +20,7 @@ public class StreamConfiguration {
     @Value("${stream.avro.output}")
     private String avroOutput;
 
+    @Value("${spring.kafka.streams.properties.schema.registry.url}")
+    private String schemaRegistryURL;
+
 }

@@ -23,8 +23,6 @@ import java.util.Map;
 public class StreamMain {
 
 
-    final Map<String, String> serdeConfig = Collections.singletonMap(AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG,
-            "http://localhost:8081");
     private final StreamConfiguration streamConfiguration;
     private final ErrorHandler errorHandler;
 

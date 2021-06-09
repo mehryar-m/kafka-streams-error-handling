@@ -35,7 +35,7 @@ public class StringStreamExample {
 
         KStream<String, RecordWrapper<String>>[] branches = errorHandler.branchError(inputStream.mapValues(new StringMapperExample()));
         branches[errorHandler.getSuccessIndex()].mapValues(RecordWrapper::toString).to("Success");
-        errorHandler.handleError(branches[errorHandler.getFailIndex()]);
+        errorHandler.publishError(branches[errorHandler.getFailIndex()]);
     }
 
 }

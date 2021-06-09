@@ -1,11 +1,14 @@
 package com.mehryar.example.kafkastreamserrorhandling.errorhandler;
 
-import com.mehryar.example.kafkastreamserrorhandling.model.ErrorRecord;
+import com.example.mehryar.Error;
+import com.example.mehryar.TopicMetadata;
 import com.mehryar.example.kafkastreamserrorhandling.model.RecordWrapper;
 import org.apache.kafka.streams.kstream.ValueTransformer;
 import org.apache.kafka.streams.processor.ProcessorContext;
 
-public class ErrorTransformer implements ValueTransformer<RecordWrapper, ErrorRecord> {
+import java.time.Instant;
+
+public class ErrorTransformer implements ValueTransformer<RecordWrapper, Error> {
 
     private ProcessorContext context;
 
@@ -16,16 +19,29 @@ public class ErrorTransformer implements ValueTransformer<RecordWrapper, ErrorRe
     }
 
     @Override
-    public ErrorRecord transform(RecordWrapper value) {
+    public Error transform(RecordWrapper value) {
 
-        return ErrorRecord.builder()
-                .applicationId(context.applicationId())
-                .code(value.getStatus())
-                .srcTopic(context.topic())
-                .srcPartition(context.partition())
-                .srcOffset(context.offset())
+        return Error.newBuilder()
+                .setApplicationId(context.applicationId())
+                .setErrorCode(value.getStatus().toString())
+                .setSrcTopic(getTopicMetadata())
+                .setRetryCount(1)
+                .setMetaData(null)
+                .setSrcEventTimestamp(getTimestamp(context.timestamp()))
                 .build();
     }
+
+    private TopicMetadata getTopicMetadata(){
+        return TopicMetadata.newBuilder()
+                .setName(context.topic())
+                .setOffset(context.offset())
+                .setPartition(context.partition()).build();
+    }
+
+    private Instant getTimestamp(long value){
+        return Instant.ofEpochMilli(value);
+    }
+
 
     @Override
     public void close() {
