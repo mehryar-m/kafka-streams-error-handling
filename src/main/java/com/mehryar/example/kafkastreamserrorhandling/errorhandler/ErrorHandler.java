@@ -1,6 +1,5 @@
 package com.mehryar.example.kafkastreamserrorhandling.errorhandler;
 
-import com.example.mehryar.NestedMockSchema;
 import com.mehryar.example.kafkastreamserrorhandling.model.ErrorRecord;
 import com.mehryar.example.kafkastreamserrorhandling.model.RecordStatus;
 import com.mehryar.example.kafkastreamserrorhandling.model.RecordWrapper;
@@ -23,7 +22,7 @@ public class ErrorHandler {
                 (key, value) -> !value.getStatus().equals(RecordStatus.SUCCESS));
     }
 
-    public <T> void handleError(KStream<String, RecordWrapper<T>> stream) {
+    public <T> void publishError(KStream<String, RecordWrapper<T>> stream) {
         stream.transformValues(new ErrorTransfomerSupplier()).mapValues(ErrorRecord::toString).to("Error");
     }
 

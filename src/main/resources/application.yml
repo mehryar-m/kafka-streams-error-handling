@@ -10,5 +10,5 @@ stream:
     outputTopic: B
   avro:
     input: NestedIn
-    output: TestedOUt
+    output: NestedOut
 

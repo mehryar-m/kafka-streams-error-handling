@@ -2,11 +2,8 @@ package com.mehryar.example.kafkastreamserrorhandling.stream;
 
 import com.example.mehryar.NestedMockSchema;
 import com.mehryar.example.kafkastreamserrorhandling.errorhandler.ErrorHandler;
-import com.mehryar.example.kafkastreamserrorhandling.mapper.AvroMapperExample;
-import com.mehryar.example.kafkastreamserrorhandling.model.ErrorRecord;
 import com.mehryar.example.kafkastreamserrorhandling.model.RecordStatus;
 import com.mehryar.example.kafkastreamserrorhandling.model.RecordWrapper;
-import com.mehryar.example.kafkastreamserrorhandling.errorhandler.ErrorTransfomerSupplier;
 import io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig;
 import io.confluent.kafka.streams.serdes.avro.GenericAvroDeserializer;
 import io.confluent.kafka.streams.serdes.avro.GenericAvroSerializer;
@@ -40,6 +37,7 @@ public class AvroStreamExample {
         this.streamConfiguration = streamConfiguration;
         this.errorHandler = errorHandler;
     }
+
     public void buildExampleAvroStream(StreamsBuilder streamsBuilder){
 
         KStream<String, RecordWrapper<NestedMockSchema>> nestedMockSchemaKStream = streamsBuilder

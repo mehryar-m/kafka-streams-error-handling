@@ -1,0 +1,23 @@
+{
+  "namespace": "com.example.mehryar",
+  "type": "record",
+  "doc": "Metadata that represents a topic",
+  "name": "TopicMetadata",
+  "fields": [
+    {
+    "name": "name",
+    "type": "string",
+    "doc": "Topic name."
+    },
+    {
+      "name": "partition",
+      "type": "int",
+      "doc": "Partition number."
+    },
+    {
+      "name": "offset",
+      "type": "long",
+      "doc": "Offset number."
+    }
+  ]
+}

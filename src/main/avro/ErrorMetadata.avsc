@@ -1,0 +1,35 @@
+{
+  "namespace": "com.example.mehryar",
+  "type": "record",
+  "doc": "Error metadata record",
+  "name": "ErrorMetadata",
+  "fields": [
+    {
+      "name": "exceptionFullyQualifiedClassName",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null,
+      "doc": "Exception fully qualified class name"
+    },
+    {
+      "name": "exceptionStackTrace",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null,
+      "doc": "Exception stack trace"
+    },
+    {
+      "name": "exceptionMessage",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null,
+      "doc": "Exception message"
+    }
+  ]
+}

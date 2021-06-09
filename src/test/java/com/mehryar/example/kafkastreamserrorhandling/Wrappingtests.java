@@ -4,14 +4,7 @@ import com.example.mehryar.MockSchema;
 import com.example.mehryar.NestedMockSchema;
 import com.mehryar.example.kafkastreamserrorhandling.model.RecordStatus;
 import com.mehryar.example.kafkastreamserrorhandling.model.RecordWrapper;
-import org.apache.avro.Schema;
-import org.apache.avro.SchemaBuilder;
-import org.apache.avro.generic.GenericRecord;
-import org.apache.avro.generic.GenericRecordBuilder;
-import org.apache.avro.reflect.ReflectData;
 import org.junit.jupiter.api.Test;
-
-import java.sql.Ref;
 
 public class Wrappingtests {
 

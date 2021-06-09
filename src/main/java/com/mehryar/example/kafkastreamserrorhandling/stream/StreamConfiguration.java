@@ -17,7 +17,7 @@ public class StreamConfiguration {
     @Value("${stream.avro.input}")
     private String avroInput;
 
-    @Value("${stream.string.output}")
+    @Value("${stream.avro.output}")
     private String avroOutput;
 
 }

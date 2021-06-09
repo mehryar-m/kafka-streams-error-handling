@@ -1,0 +1,59 @@
+{
+  "namespace": "com.example.mehryar",
+  "type": "record",
+  "doc": "Avro schema for DSP streams error topic",
+  "name": "Error",
+  "fields": [
+    {
+      "name": "uuid",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null,
+      "doc": "UUID for the message (from the headers)"
+    },
+    {
+      "name": "errorCode",
+      "type": "string",
+      "doc": "DSP error code, mapping to error code definitions defined in PIP-29"
+    },
+    {
+      "name": "metaData",
+      "type": [
+        "null",
+        "$package.internal.dsp.error.ErrorMetadata"
+      ],
+      "doc": "Optional field. Error metadata object for cases here stack trace information is relevant for the error.",
+      "default": null
+    },
+    {
+      "name": "applicationId",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null,
+      "doc": "The application name for the application that produced this message. This should correspond to the pplication name in OpenShift."
+    },
+    {
+      "name": "srcTopic",
+      "type": "$package.internal.dsp.error.TopicMetadata",
+      "doc": "Source topic metadata of the source event that caused this error."
+    },
+    {
+      "name": "srcEventTimestamp",
+      "type": {
+          "type": "long",
+          "logicalType": "timestamp-millis"
+        },
+      "doc": "Kafka event timestamp as specified by the header information of the event that caused the error."
+    },
+    {
+      "name": "retryCount",
+      "type": "int" ,
+      "default": 1,
+      "doc": "Count of whether this is the first time this message has caused an error or it has been retried previously."
+    }
+  ]
+}
