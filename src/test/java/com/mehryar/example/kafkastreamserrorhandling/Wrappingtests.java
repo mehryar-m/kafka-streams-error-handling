@@ -20,8 +20,8 @@ public class Wrappingtests {
                 .setMockSchema(mockSchema)
                 .setSomeParentString("parent").build();
 
-        assert wrap(nestedMockSchema).getStatus() == RecordStatus.SUCCESS;
-        assert wrap(nestedMockSchema).getGenericRecord().get("status") == RecordStatus.SUCCESS;
+        assert wrap(nestedMockSchema).getStatus().equals(RecordStatus.SUCCESS);
+        assert wrap(nestedMockSchema).getGenericRecord().get("status").equals(RecordStatus.SUCCESS);
         System.out.println();
 
     }

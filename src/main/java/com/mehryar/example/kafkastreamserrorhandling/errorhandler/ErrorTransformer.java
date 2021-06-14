@@ -26,7 +26,7 @@ public class ErrorTransformer implements ValueTransformer<RecordWrapper, Error> 
                 .setErrorCode(value.getStatus().toString())
                 .setSrcTopic(getTopicMetadata())
                 .setRetryCount(1)
-                .setMetaData(null) // TODO: exception
+                .setMetaData(value.getErrorMetadata()) // TODO: exception
                 .setSrcEventTimestamp(getTimestamp(context.timestamp()))
                 .build();
     }

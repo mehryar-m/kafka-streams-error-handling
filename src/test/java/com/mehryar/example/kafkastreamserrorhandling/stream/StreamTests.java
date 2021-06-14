@@ -39,8 +39,8 @@ public class StreamTests {
     public void serdePrep(){
         streamConfiguration.setAvroInputA("avroInputA");
         streamConfiguration.setAvroInputB("avroInputB");
-
         streamConfiguration.setAvroOutput("avroOutput");
+
         streamConfiguration.setSchemaRegistryURL("mock://" + SCHEMA_REGISTRY_SCOPE);
         props = new Properties();
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, "kafka-stream");
@@ -62,7 +62,7 @@ public class StreamTests {
         Topology topology = streamsBuilder.build();
         topologyTestDriver = new TopologyTestDriver(topology, props);
 
-        nestedMockSchemaTestInputTopic= topologyTestDriver.createInputTopic(streamConfiguration.getAvroInputA(), new Serdes.StringSerde().serializer(), mockSchemaSerde.serializer());
+        nestedMockSchemaTestInputTopic = topologyTestDriver.createInputTopic(streamConfiguration.getAvroInputA(), new Serdes.StringSerde().serializer(), mockSchemaSerde.serializer());
         nestedMockSchemaTestOutputTopic = topologyTestDriver.createOutputTopic(streamConfiguration.getAvroOutput(), new Serdes.StringSerde().deserializer(), mockSchemaSerde.deserializer());
         errorTestOutputTopic = topologyTestDriver.createOutputTopic("Error", new Serdes.StringSerde().deserializer(), errorSerde.deserializer());
 
@@ -71,10 +71,10 @@ public class StreamTests {
                 .setMockSchema(MockSchema.newBuilder().setSomeChildString("child").build()).build();
 
         nestedMockSchemaTestInputTopic.pipeInput("ok", nestedMockSchema);
-        assert !nestedMockSchemaTestOutputTopic.isEmpty();
+        assert !this.nestedMockSchemaTestOutputTopic.isEmpty();
         nestedMockSchema.setSomeParentString("bad");
         nestedMockSchemaTestInputTopic.pipeInput("ok", nestedMockSchema);
-        assert errorTestOutputTopic.readValue().getErrorCode().equals(RecordStatus.BAD_MAPPING.toString());
+        assert this.errorTestOutputTopic.readValue().getErrorCode().equals(RecordStatus.BAD_MAPPING.toString());
 
     }
 

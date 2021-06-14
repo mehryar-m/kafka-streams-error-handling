@@ -38,14 +38,14 @@ public class ErrorHandler {
         this.serdeConfig = getSerdeConfig(streamConfiguration.getSchemaRegistryURL());
     }
 
-    public <T> KStream<String, RecordWrapper<T>>[] branchError(KStream<String, RecordWrapper<T>> stream) {
+    private <T> KStream<String, RecordWrapper<T>>[] branchError(KStream<String, RecordWrapper<T>> stream) {
         assert stream != null;
         return stream.branch(
                 (key, value) -> value.getStatus().equals(RecordStatus.SUCCESS),
                 (key, value) -> !value.getStatus().equals(RecordStatus.SUCCESS));
     }
 
-    public <T> void publishError(KStream<String, RecordWrapper<T>> stream) {
+    private <T> void publishError(KStream<String, RecordWrapper<T>> stream) {
         stream.transformValues(new ErrorTransfomerSupplier())
                 .to("Error", getSerdes());
     }
@@ -100,7 +100,7 @@ public class ErrorHandler {
 
     public <T> RecordWrapper<T> getRecordWrapperFromGenericRecord(GenericRecord genericRecord, Class c) {
         Schema statusSchema = ReflectData.get().getSchema(RecordStatus.class);
-        RecordStatus status = (RecordStatus) SpecificData.get().deepCopy(statusSchema, genericRecord.get("status"));
+        String status = genericRecord.get("status").toString();
         return new RecordWrapper<>(status, getDataSpecificRecord(genericRecord, c));
     }
 
