@@ -1,5 +1,5 @@
 {
-  "namespace": "com.example.mehryar",
+  "namespace": "com.example.mehryar.kafkastreamserrorhandling.model",
   "type": "record",
   "name": "MockSchema",
   "fields": [

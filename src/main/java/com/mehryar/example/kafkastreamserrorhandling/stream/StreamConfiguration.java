@@ -14,8 +14,11 @@ public class StreamConfiguration {
     @Value("${stream.string.outputTopic}")
     private String outputTopic;
 
-    @Value("${stream.avro.input}")
-    private String avroInput;
+    @Value("${stream.avro.inputA}")
+    private String avroInputA;
+
+    @Value("${stream.avro.inputB}")
+    private String avroInputB;
 
     @Value("${stream.avro.output}")
     private String avroOutput;

@@ -4,7 +4,17 @@
 ## Background
 
 - Provide a pattern to produce to an Error topic, given failure modes.
-
+- TODO: Deal with a repartition topics and potentially looking at interceptors. 
+- TODO: Sidecar, so instead just log the error to be picked up.
+  - i still that metadata that's in the context.
+  - streams jmx beans reports where that is
+  - The logs today have that but we are not 100p sure that the offset is in fact correct.
+  - Create a single global context thingy that might have a lot of this information.
+  - Avoid developer coding/maintinging/etc.
+  - Deserialization Exception Handler
+  - take a look at this KafkaInfrastructureCustomizer. 
+  
+  
 ### What are the processing failure modes?
 
 #### Data Mapping/Transformation Exception (Validation)

@@ -14,6 +14,7 @@ stream:
     inputTopic: A
     outputTopic: B
   avro:
-    input: NestedIn
+    inputA: NestedInA
+    inputB: NestedInB
     output: NestedOut
 

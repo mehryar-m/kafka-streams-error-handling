@@ -1,5 +1,5 @@
 {
-  "namespace": "com.example.mehryar",
+  "namespace": "com.example.mehryar.kafkastreamserrorhandling.model",
   "type": "record",
   "doc": "Avro schema for DSP streams error topic",
   "name": "Error",
@@ -22,7 +22,7 @@
       "name": "metaData",
       "type": [
         "null",
-        "com.example.mehryar.ErrorMetadata"
+        "com.example.mehryar.kafkastreamserrorhandling.model.ErrorMetadata"
       ],
       "doc": "Optional field. Error metadata object for cases here stack trace information is relevant for the error.",
       "default": null
@@ -38,7 +38,7 @@
     },
     {
       "name": "srcTopic",
-      "type": "com.example.mehryar.TopicMetadata",
+      "type": "com.example.mehryar.kafkastreamserrorhandling.model.TopicMetadata",
       "doc": "Source topic metadata of the source event that caused this error."
     },
     {

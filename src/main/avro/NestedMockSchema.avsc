@@ -1,5 +1,5 @@
 {
-  "namespace": "com.example.mehryar",
+  "namespace": "com.example.mehryar.kafkastreamserrorhandling.model",
   "type": "record",
   "name": "NestedMockSchema",
   "fields": [
@@ -12,7 +12,7 @@
     },
     {
       "name": "mockSchema",
-      "type": "com.example.mehryar.MockSchema"
+      "type": "com.example.mehryar.kafkastreamserrorhandling.model.MockSchema"
     }
   ]
 }
