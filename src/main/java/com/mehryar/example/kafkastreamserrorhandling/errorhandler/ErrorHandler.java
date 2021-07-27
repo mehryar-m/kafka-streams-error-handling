@@ -41,8 +41,16 @@ public class ErrorHandler {
     private <T> KStream<String, RecordWrapper<T>>[] branchError(KStream<String, RecordWrapper<T>> stream) {
         assert stream != null;
         return stream.branch(
-                (key, value) -> value.getStatus().equals(RecordStatus.SUCCESS),
-                (key, value) -> !value.getStatus().equals(RecordStatus.SUCCESS));
+                (key, value) -> value.getStatus().equals(RecordStatus.SUCCESS), // -> [0]
+                (key, value) -> !value.getStatus().equals(RecordStatus.SUCCESS)); // -> [1]
+
+    }
+
+    private <T> KStream<String, RecordWrapper<T>> splitToError(KStream<String, RecordWrapper<T>> stream) {
+        assert stream != null;
+        KStream<String, RecordWrapper<T>>[] branches = branchError(stream);
+        publishError(branches[1]);
+        return branches[0];
     }
 
     private <T> void publishError(KStream<String, RecordWrapper<T>> stream) {

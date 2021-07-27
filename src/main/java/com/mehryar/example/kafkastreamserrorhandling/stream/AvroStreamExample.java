@@ -41,9 +41,9 @@ public class AvroStreamExample {
 
         KStream<String, RecordWrapper<NestedMockSchema>> nestedMockSchemaKStream =
                 errorHandler.startTopology(streamsBuilder, streamConfiguration.getAvroInputA(), getNestedMockSchemaSerde());
-
+        // developer does whatever
         nestedMockSchemaKStream.mapValues(new MockErrorMapperExample()); // mock mapper that errors out if a bad thing happened.
-
+        // developer does whatever
         errorHandler.completeTopology(streamConfiguration.getAvroOutput(), nestedMockSchemaKStream);
     }
 

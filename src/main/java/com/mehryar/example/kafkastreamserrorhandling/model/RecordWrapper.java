@@ -2,6 +2,8 @@ package com.mehryar.example.kafkastreamserrorhandling.model;
 
 
 import com.example.mehryar.kafkastreamserrorhandling.model.ErrorMetadata;
+import lombok.Builder;
+import lombok.Data;
 import org.apache.avro.Schema;
 import org.apache.avro.SchemaBuilder;
 import org.apache.avro.generic.GenericRecord;
@@ -10,11 +12,13 @@ import org.apache.avro.reflect.ReflectData;
 import org.apache.avro.specific.SpecificData;
 
 @SuppressWarnings("unchecked")
+@Data
+@Builder
 public class RecordWrapper<T> {
     private String status;
     // TODO: For exceptions being passed down, we will need an optional parameter here as well.
     private ErrorMetadata errorMetadata;
-    private T data;
+    private T data; // -> avroSchemas...
 
     public RecordWrapper() {
         this.status = "SUCCESS";
